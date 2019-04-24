@@ -6,7 +6,8 @@
 int get_slash(int mask)
 {
     int k = 0;
-    while(!((mask >> k++) & 1));
+    while( !( (mask >> k) & 1) )
+        k++;
     return 32 - k;
 }
 
