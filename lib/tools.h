@@ -16,5 +16,8 @@ struct Options
 };
 
 int get_slash(int);
+int get_mask(int);
+int read_slash(char*);
+int read_address(char*);
 void analyze(int, char**, struct Options&);
 void show_options(struct Options);

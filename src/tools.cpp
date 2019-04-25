@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <getopt.h>
 #include <tools.h>
@@ -9,6 +10,39 @@ int get_slash(int mask)
     while( !( (mask >> k) & 1) )
         k++;
     return 32 - k;
+}
+
+int read_address(char *network)
+{
+    int address = 0, segment = 24;
+    char *original, *token;
+    original = strdup(network);
+    /* get the first token */
+    token = strtok(original, ".");
+    while( token != NULL )
+    {
+        address |= atoi(token) << segment;
+        segment -= 8;
+        token = strtok(NULL, ".");
+    }
+    return address;
+}
+
+int read_slash(char *network)
+{
+    char *token;
+    /* get the first token */
+    token = strtok(network, "/");
+    token = strtok(NULL, "/");
+    return atoi(token);
+}
+
+int get_mask(int slash)
+{
+    int mask = 0;
+    while(slash > 0)
+        mask |= 1 << (slash-- + 7);
+    return mask;
 }
 
 void analyze(int argc, char **argv, struct Options &options)
