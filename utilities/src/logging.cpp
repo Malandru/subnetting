@@ -1,28 +1,35 @@
 #include <logging.hpp>
-#include <argsparse.hpp>
+#define TRACE "trace"
+#define DEBUG "debug"
+#define INFO "info"
+#define WARN "warn"
+#define ERROR "error"
+#define CRITICAL "critical"
 
-void activate_logging()
+
+void activate_logging(spdlog::level::level_enum log_level)
 {
     // create color multi threaded logger
     logger = spdlog::stdout_color_mt("console");
     logger->set_pattern("[%d-%b-%Y %T] [%l] %v");
+    logger->set_level(log_level);
+    logger->trace("Global logger activated");
+}
 
-    if (FLAGS_trace)
-        logger->set_level(spdlog::level::trace);
-    else if (FLAGS_debug)
-        logger->set_level(spdlog::level::debug);
-    else if (FLAGS_info)
-        logger->set_level(spdlog::level::info);
-    else if (FLAGS_warn)
-        logger->set_level(spdlog::level::warn);
-    else if (FLAGS_error)
-        logger->set_level(spdlog::level::err);
-    else if (FLAGS_critical)
-        logger->set_level(spdlog::level::critical);
-    else if (FLAGS_off)
-        logger->set_level(spdlog::level::off);
-    else
-        logger->set_level(spdlog::level::info);
-    
-    logger->info("Logger activated");
+spdlog::level::level_enum str_tenum(std::string str_log_level)
+{
+    if (str_log_level == TRACE)
+        return spdlog::level::level_enum::trace;
+    if (str_log_level == DEBUG)
+        return spdlog::level::level_enum::debug;
+    if (str_log_level == INFO)
+        return spdlog::level::level_enum::info;
+    if (str_log_level == WARN)
+        return spdlog::level::level_enum::warn;
+    if (str_log_level == ERROR)
+        return spdlog::level::level_enum::err;
+    if (str_log_level == CRITICAL)
+        return spdlog::level::level_enum::critical;
+
+    return spdlog::level::level_enum::info;
 }
