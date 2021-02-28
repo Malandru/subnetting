@@ -6,9 +6,16 @@
 class Network
 {
 private:
+    std::string network;
     int address;
     int slash;
     int mask;
+
+    void validate_network();
+    std::string address_to_str(int address);
+
+    int parse_address();
+    int parse_mask();
 
 public:
     Network(std::string network);
