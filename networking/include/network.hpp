@@ -1,25 +1,27 @@
 #ifndef NETWORK_HPP
 #define NETWORK_HPP
-
 #include <string>
 
 class Network
 {
 private:
-    std::string network;
     int address;
-    int slash;
     int mask;
-
-    void validate_network();
-    std::string address_to_str(int address);
-
-    int parse_address();
-    int parse_mask();
+    int slash;
 
 public:
-    Network(std::string network);
+    Network();
     void print_details();
+
+    int get_address();
+    int get_mask();
+    int get_slash();
+
+    void set_address(int address);
+    void set_mask(int mask);
+    void set_slash(int slash);
 };
+
+std::string address_to_str(int address);
 
 #endif
