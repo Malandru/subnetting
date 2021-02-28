@@ -11,7 +11,7 @@ std::string address_to_str(int address)
     while(bits > -1)
     {
         str_address.append(std::to_string((address >> bits) & 255));
-        str_address.append((bits -= 8) > -1 ? "." : " ");
+        str_address.append((bits -= 8) > -1 ? "." : "");
     }
     return str_address;
 }
@@ -22,7 +22,7 @@ Network::Network() {}
 
 void Network::print_details()
 {
-    logger->info("IP Address: {}", address_to_str(this->address));
+    logger->info("IP Address: {}/{}", address_to_str(this->address), slash);
     logger->info("Mask: {}", address_to_str(this->mask));
 }
 
