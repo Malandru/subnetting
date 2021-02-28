@@ -4,7 +4,6 @@
 #include <bitset>
 
 #define IPV4_NET_PATTERN "([0-9]+(.)){3}[0-9]+/[0-9]+"
-#define IPV4_NET_BITS 32
 
 
 NetParser::NetParser(std::string str_net)

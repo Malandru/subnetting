@@ -1,6 +1,7 @@
 #ifndef NETWORK_HPP
 #define NETWORK_HPP
 #include <string>
+#define IPV4_NET_BITS 32
 
 class Network
 {
