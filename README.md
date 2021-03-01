@@ -1,44 +1,35 @@
 # subnet-command
 A program that works like a terminal command.
 
-It subnets a Network by needed hosts or needed networks.
-
-Syntaxis:
--
-    ./subnet -{h|s}=NUM [Options] Network/mask
-    
-Example:
-
-    ./subnet -h=30 192.168.1.0/24
+It subnets a Network by a number of required hosts or a number of required networks.
  
-Forced arguments:
--
--h=NUM:
-Subnet type is by a total of NUM hosts needed.
+## Requirements
 
--s=NUM:
-Subnet type is by a total of NUM networks needed.
+* cmake
+* build-essentials
+* [argparse.hpp](https://github.com/p-ranav/argparse) Nov 21, 2019 release
 
-Options:
--
--e:
-Enum every network printed.
+## Compilation
 
--l=NUM:
-List a total of NUM networks
+```
+git clone https://github.com/Malandru/subnetting
+mkdir subnetting/build
+cd subnetting/build
+cmake ..
+make
+```
 
--r:
-Networks will be printed in reverse order
+## Execution
+Inside `subnetting/build/ directory`:
 
--x:
-Print extra subnetting information
-
-Notes:
--
-Not all options are available, yet.
-Before execute install.sh, build-essential is needed.
-
-    $sudo apt-get install build-essential
-
-The file install.sh generates bin/ and obj/ directories.
-You can execute de command by changing to bin/ directory and use the example above.
+```
+./subnet --help
+```
+    
+Usage examples:
+```
+./subnet --hosts 120 192.168.1.0/24
+```
+```
+./subnet --subnets 2 192.168.1.0/24
+```
