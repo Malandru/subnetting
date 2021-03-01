@@ -1,52 +1,54 @@
+#include <arguments.hpp>
 #include <logging.hpp>
-#include <argparse.hpp>
 
-#include <network.hpp>
+#include <netparser.hpp>
+#include <subnet.hpp>
 #include <iostream>
-#include <stdlib.h>
+
+void show_results(std::vector<Network*> results)
+{
+    std::cout << "--------------------------------------------" << std::endl;
+    std::cout << "IPv4 Address\tFull mask Address\tSlash mask" << std::endl;
+    for(Network* net : results)
+    {
+        std::cout << address_to_str(net->get_address()) << "\t";
+        std::cout << address_to_str(net->get_mask()) << "\t\t";
+        std::cout << net->get_slash() << std::endl;
+    }
+    std::cout << "--------------------------------------------" << std::endl;
+}
 
 int main(int argc, char **argv)
 {
-    argparse::ArgumentParser program("subnet");
+    Arguments* args = parse_arguments(argc, argv);
+    activate_logging(args->get_log_level());
 
-    program.add_argument("-c", "--config")
-        .help("Configuration input JSON file")
-        .default_value(std::string("config.json"));
+    NetParser netparser(args->get_network());
+    Network* network = netparser.get_network();
+    network->print_details();
 
-    program.add_argument("-m", "--models_dir")
-        .help("Models directory")
-        .default_value(std::string("."));
-
-    try
+    int required_hosts = args->get_required_hosts();
+    int required_subnets = args->get_required_subnets();
+    if (required_subnets == 0 && required_hosts == 0)
     {
-        program.parse_args(argc, argv);
-    }
-    catch (const std::runtime_error &err)
-    {
-        std::cout << err.what() << std::endl;
-        std::cout << program;
+        logger->warn("Execute with the --help flag to see subnet options");
         exit(0);
     }
-    std::cout << "Everything is OK" << std::endl;
 
-    std::string config = program.get<std::string>("--config");
-    std::string models_dir = program.get<std::string>("--models_dir");
+    std::vector<Network*> subnets;
+    if (required_subnets)
+    {
+        subnets = subnet(network, required_subnets);
+        std::cout << "\tIPv4 subnet by required networks results" << std::endl;
+        show_results(subnets);
+    }
 
-    char* output;
-    output = realpath(config.c_str(), NULL);
-    if (output == NULL)
-        std::cout << "Configuration file does not exist" << std::endl;
-    else
-        config.assign(output);
-    
-    output = realpath(models_dir.c_str(), NULL);
-    if (output == NULL)
-        std::cout << "Models directory does not exist" << std::endl;
-    else
-        models_dir.assign(output);
+    if (required_hosts)
+    {
+        subnets = subnet_by_hosts(network, required_hosts);
+        std::cout << "\tIPv4 subnet by required hosts results" << std::endl;
+        show_results(subnets);
+    }
 
-
-    std::cout << "Configuration file: " << config << std::endl;
-    std::cout << "Models directory: " << models_dir << std::endl;
     return 0;
 }
