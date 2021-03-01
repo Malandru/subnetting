@@ -9,6 +9,7 @@ find_package(Threads REQUIRED)
 
 add_subdirectory(networking)
 add_subdirectory(utilities)
+add_subdirectory(workflow)
 
 add_executable(subnet main.cpp)
-target_link_libraries(subnet network)
+target_link_libraries(subnet wflow)
