@@ -4,7 +4,7 @@
 #include <network.hpp>
 #include <vector>
 
-std::vector<Network*> subnet_by_hosts(Network* input, int required_hosts);
-std::vector<Network*> subnet(Network* input, int required_subnets);
+std::vector<Network*> subnet_by_hosts(Network* base, int required_hosts);
+std::vector<Network*> subnet(Network* base, int required_subnets);
 
 #endif
