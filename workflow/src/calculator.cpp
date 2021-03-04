@@ -10,6 +10,14 @@ Calculator::Calculator(Network* base)
 std::vector<Network*> Calculator::subnet_by_networks(int required)
 {
     int borrowed_bits = ceil(log2(required));
+    int new_slash = this->base->get_slash() + borrowed_bits;
+
+    if (new_slash >= IPV4_NET_BITS)
+    {
+        logger->error("Can not create {} subnets because {} bits are required, but only {} are available", 
+            required, borrowed_bits, IPV4_NET_BITS - base->get_slash());
+        exit(1);
+    }
     return subnetting(borrowed_bits);
 }
 
@@ -17,6 +25,14 @@ std::vector<Network*> Calculator::subnet_by_hosts(int required)
 {
     int host_bits = ceil(log2(required + 2));
     int borrowed_bits = IPV4_NET_BITS - (base->get_slash() + host_bits);
+
+    if (borrowed_bits < 0)
+    {
+        int max_hosts = pow(2, IPV4_NET_BITS - base->get_slash());
+        logger->error("Max hosts per network are {}, but you're asking for [{}]",
+            max_hosts, required);
+        exit(1);
+    }
     return subnetting(borrowed_bits);
 }
 
