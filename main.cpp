@@ -2,18 +2,21 @@
 #include <logging.hpp>
 
 #include <netparser.hpp>
-#include <subnet.hpp>
+#include <calculator.hpp>
 #include <iostream>
 
 void show_results(std::vector<Network*> results)
 {
     std::cout << "--------------------------------------------" << std::endl;
-    std::cout << "IPv4 Address\tFull mask Address\tSlash mask" << std::endl;
-    for(Network* net : results)
+    std::cout << "ID\tNetwork Address\t\tFull mask address\tBroadcast" << std::endl;
+    Network* net;
+    for(int i = 0; i < results.size(); i++)
     {
-        std::cout << address_to_str(net->get_address()) << "\t";
+        net = results[i];
+        std::cout << i << "\t";
+        std::cout << address_to_str(net->get_address()) << "\t/" << net->get_slash() << "\t";
         std::cout << address_to_str(net->get_mask()) << "\t\t";
-        std::cout << net->get_slash() << std::endl;
+        std::cout << address_to_str(net->get_broadcast()) << std::endl;
     }
     std::cout << "--------------------------------------------" << std::endl;
 }
@@ -35,17 +38,19 @@ int main(int argc, char **argv)
         exit(0);
     }
 
+    Calculator calculator(network);
+
     std::vector<Network*> subnets;
     if (required_subnets)
     {
-        subnets = subnet(network, required_subnets);
+        subnets = calculator.subnet_by_networks(required_subnets);
         std::cout << "\tIPv4 subnet by required networks results" << std::endl;
         show_results(subnets);
     }
 
     if (required_hosts)
     {
-        subnets = subnet_by_hosts(network, required_hosts);
+        subnets = calculator.subnet_by_hosts(required_hosts);
         std::cout << "\tIPv4 subnet by required hosts results" << std::endl;
         show_results(subnets);
     }
