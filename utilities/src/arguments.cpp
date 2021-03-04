@@ -60,12 +60,12 @@ Arguments* parse_arguments(int argc, char** argv)
         .help("Log level (trace, info, debug, error, critical), default is --level info")
         .default_value(std::string("info"));
 
-    program.add_argument("-h", "--hosts")
+    program.add_argument("--hosts")
         .help("Required hosts to implement the subnetting")
         .default_value(0)
         .action([] (const std::string& value) { return std::stoi(value); });
 
-    program.add_argument("-s", "--subnets")
+    program.add_argument("--subnets")
         .help("Required subnets to implement the subnetting")
         .default_value(0)
         .action([] (const std::string& value) { return std::stoi(value); });
