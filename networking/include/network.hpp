@@ -9,6 +9,7 @@ private:
     int address;
     int mask;
     int slash;
+    int broadcast;
 
 public:
     Network();
@@ -17,10 +18,12 @@ public:
     int get_address();
     int get_mask();
     int get_slash();
+    int get_broadcast();
 
     void set_address(int address);
     void set_mask(int mask);
     void set_slash(int slash);
+    void set_broadcast(int broadcast);
 };
 
 std::string address_to_str(int address);

@@ -41,6 +41,11 @@ int Network::get_slash()
     return this->slash;
 }
 
+int Network::get_broadcast()
+{
+    return this->broadcast;
+}
+
 void Network::set_address(int address)
 {
     this->address = address;
@@ -54,4 +59,9 @@ void Network::set_mask(int mask)
 void Network::set_slash(int slash)
 {
     this->slash = slash;
+}
+
+void Network::set_broadcast(int broadcast)
+{
+    this->broadcast = broadcast;
 }
