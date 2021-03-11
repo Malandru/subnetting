@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     Arguments* args = parse_arguments(argc, argv);
     activate_logging(args->get_log_level());
 
-    NetParser netparser(args->get_network());
+    NetParser netparser(args->get_str_network());
     Network* network = netparser.get_network();
     network->print_details();
     std::cout << std::endl;
