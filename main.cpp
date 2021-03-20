@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 
     int required_hosts = args->get_required_hosts();
     int required_subnets = args->get_required_subnets();
-    if (required_subnets == 0 && required_hosts == 0)
+    if (required_subnets <= 0 && required_hosts <= 0)
     {
         logger->warn("Execute with the --help flag to see subnet options");
         exit(0);
