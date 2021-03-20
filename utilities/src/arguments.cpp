@@ -57,7 +57,7 @@ Arguments* parse_arguments(int argc, char** argv)
     argparse::ArgumentParser program("subnet");
 
     program.add_argument("-l", "--level")
-        .help("Log level (trace, info, debug, error, critical), default is --level info")
+        .help("Log level (trace, debug, info, error, critical), default is --level info")
         .default_value(std::string("info"));
 
     program.add_argument("--hosts")
