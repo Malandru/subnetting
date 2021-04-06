@@ -92,16 +92,6 @@ g++ --version
 sudo apt-get install cmake
 cmake --version
 ```
-### The [spdlog](https://github.com/gabime/spdlog) library
-```
-sudo apt-get install libspdlog-dev
-```
-### The [p-ranav/argparse](https://github.com/p-ranav/argparse) header file
-
-* Download the [argparse.hpp](https://github.com/p-ranav/argparse/releases/tag/v2.0) file from Nov 21, 2019 release, then run:
-```
-sudo cp ~/Downloads/argparse.hpp /usr/include/
-```
 
 ## Compilation
 * Clone the `subnetting` repository
