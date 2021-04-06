@@ -8,7 +8,7 @@ find_package(Threads REQUIRED)
 
 if (APPLE)
     message("Using macOS C++ flags")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libc++ -static-libstdc++")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -static-libstdc++")
 else()
     message("Using Linux g++ flags")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
